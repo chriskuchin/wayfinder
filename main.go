@@ -35,6 +35,7 @@ var (
 	cloudflareToken string
 	zoneID          string
 	dryRun          bool
+	region          string
 
 	DNSProvider string
 
@@ -114,6 +115,15 @@ func main() {
 			return nil
 		},
 		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "region",
+				Value:       "us-west-2",
+				Destination: &region,
+				EnvVars: []string{
+					"AWS_REGION",
+				},
+				Aliases: []string{},
+			},
 			&cli.BoolFlag{
 				Name:        "dry-run",
 				Value:       false,
@@ -177,7 +187,13 @@ func getPublicIP() string {
 func getZoneRecords(zoneID string) map[string]DNSRecord {
 	result := map[string]DNSRecord{}
 	if DNSProvider == "route53" {
-		svc := route53.New(session.New())
+		sess, err := session.NewSession(aws.NewConfig().WithRegion(region))
+		if err != nil {
+			log.Errorf("failed to instantiate a session: %+v", err)
+			return nil
+		}
+
+		svc := route53.New(sess)
 		out, err := svc.ListResourceRecordSets(&route53.ListResourceRecordSetsInput{
 			HostedZoneId: aws.String(zoneID),
 		})
@@ -231,8 +247,13 @@ func getZoneRecords(zoneID string) map[string]DNSRecord {
 
 func updateZoneRecord(record DNSRecord, zoneID string) {
 	if DNSProvider == "route53" {
-		svc := route53.New(session.New())
+		sess, err := session.NewSession(aws.NewConfig().WithRegion(region))
+		if err != nil {
+			log.Errorf("failed to instantiate a session: %+v", err)
+			return
+		}
 
+		svc := route53.New(sess)
 		resourceRecords := []*route53.ResourceRecord{}
 
 		for _, resRecord := range strings.Split(record.Content, ", ") {
