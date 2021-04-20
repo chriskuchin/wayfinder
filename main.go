@@ -210,7 +210,7 @@ func getZoneRecords(zoneID string) map[string]DNSRecord {
 
 		records, err := cf.DNSRecords(zoneID, cloudflare.DNSRecord{Type: "A"})
 		if err != nil {
-			log.Errorf("Failed to query zone for existing records: %+v")
+			log.Errorf("Failed to query zone for existing records: %+v", err)
 			return nil
 		}
 

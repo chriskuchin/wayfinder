@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine AS build_base
+FROM golang:1.16-alpine AS build_base
 
 RUN apk add --no-cache git
 
@@ -24,9 +24,6 @@ FROM alpine:3.9
 RUN apk add ca-certificates
 
 COPY --from=build_base /tmp/app/out/dns /app/dns
-
-# This container exposes port 8080 to the outside world
-EXPOSE 8080
 
 # Run the binary program produced by `go install`
 CMD ["/app/dns"]

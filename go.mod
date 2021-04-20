@@ -1,4 +1,4 @@
-module chriskuchin/dns
+module chriskuchin/wayfinder
 
 go 1.14
 
