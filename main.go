@@ -199,6 +199,7 @@ func getZoneRecords(zoneID string) map[string]DNSRecord {
 		})
 		if err != nil {
 			log.Error(err)
+			return nil
 		}
 
 		for _, record := range out.ResourceRecordSets {
