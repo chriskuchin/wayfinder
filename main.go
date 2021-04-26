@@ -102,8 +102,8 @@ func main() {
 
 					if currentRecord.Name == "" || currentRecord.Content != record.Content || currentRecord.TTL != record.TTL || currentRecord.Type != record.Type {
 						log.Info("records Don't match")
-						log.Infof("%#v\n", currentRecord)
-						log.Infof("%#v\n", record)
+						log.Debugf("%#v\n", currentRecord)
+						log.Debugf("%#v\n", record)
 						if !dryRun {
 							updateZoneRecord(record, zoneID)
 						}
