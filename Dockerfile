@@ -20,7 +20,7 @@ RUN CGO_ENABLED=0 go test -v
 RUN go build -o ./out/dns .
 
 # Start fresh from a smaller image
-FROM alpine:3.9
+FROM alpine:3.18
 RUN apk add ca-certificates
 
 COPY --from=build_base /tmp/app/out/dns /app/dns
