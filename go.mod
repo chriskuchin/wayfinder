@@ -3,7 +3,7 @@ module chriskuchin/wayfinder
 go 1.20
 
 require (
-	github.com/aws/aws-sdk-go v1.48.16
+	github.com/aws/aws-sdk-go v1.49.4
 	github.com/cloudflare/cloudflare-go v0.12.2
 	github.com/hashicorp/consul/api v1.26.1
 	github.com/prometheus/common v0.20.0
