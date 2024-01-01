@@ -7,7 +7,7 @@ require (
 	github.com/cloudflare/cloudflare-go v0.12.2
 	github.com/hashicorp/consul/api v1.26.1
 	github.com/prometheus/common v0.20.0
-	github.com/urfave/cli/v2 v2.26.0
+	github.com/urfave/cli/v2 v2.27.1
 )
 
 require (
